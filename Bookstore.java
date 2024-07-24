@@ -11,16 +11,16 @@ public class Bookstore {
     }
 
     public void addBook(Book book) {
-        inventory.put(book.getTitle(), book);
+        inventory.put(book.getIsbn(), book);
         logger.info("Added book: " + book);
     }
 
-    public void removeBook(String title) {
-        Book removedBook = inventory.remove(title);
+    public void removeBook(String isbn) {
+        Book removedBook = inventory.remove(isbn);
         if (removedBook != null) {
             logger.info("Removed book: " + removedBook);
         } else {
-            logger.warning("Book not found: " + title);
+            logger.warning("Book not found with ISBN: " + isbn);
         }
     }
 
