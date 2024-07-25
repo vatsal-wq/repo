@@ -4,34 +4,49 @@ import java.util.logging.Logger;
 
 public class Bookstore {
     private static final Logger logger = Logger.getLogger(Bookstore.class.getName());
-    private Map<String, Book> inventory;
+    private Map<Book, Integer> inventory;
+    private Map<Book, Integer> sold;
 
     public Bookstore() {
         inventory = new HashMap<>();
+        sold = new HashMap<>();
     }
 
-    public void addBook(Book book) {
-        inventory.put(book.getIsbn(), book);
-        logger.info("Added book: " + book);
+    public void addBook(Book book, int quantity) {
+        inventory.put(book, quantity);
+        sold.put(book, 0);
+        logger.info("Added book: " + book + " with quantity: " + quantity);
     }
 
-    public void removeBook(String isbn) {
-        Book removedBook = inventory.remove(isbn);
-        if (removedBook != null) {
-            logger.info("Removed book: " + removedBook);
+    public void removeBook(Book book) {
+        if (inventory.containsKey(book)) {
+            inventory.remove(book);
+            sold.remove(book);
+            logger.info("Removed book: " + book);
         } else {
-            logger.warning("Book not found with ISBN: " + isbn);
+            logger.warning("Book not found: " + book);
+        }
+    }
+
+    public void sellBook(Book book, int quantity) {
+        if (inventory.containsKey(book)) {
+            int currentInventory = inventory.get(book);
+            if (currentInventory >= quantity) {
+                inventory.put(book, currentInventory - quantity);
+                sold.put(book, sold.get(book) + quantity);
+                logger.info("Sold " + quantity + " copies of book: " + book);
+            } else {
+                logger.warning("Not enough inventory for book: " + book);
+            }
+        } else {
+            logger.warning("Book not found: " + book);
         }
     }
 
     public void displayInventory() {
-        if (inventory.isEmpty()) {
-            logger.info("No books in inventory.");
-        } else {
-            logger.info("Inventory:");
-            for (Book book : inventory.values()) {
-                logger.info(book.toString());
-            }
-        }
-    }
-}
+        logger.info("Current Inventory:");
+        for (Map.Entry<Book, Integer> entry : inventory.entrySet()) {
+            Book book = entry.getKey();
+            int quantity = entry.getValue();
+            logger.info(book.toString() + ", Quantity: " + quantity + ", Sold: " + sold.get(book));
+      
