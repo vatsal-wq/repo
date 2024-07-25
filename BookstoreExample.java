@@ -6,29 +6,33 @@ public class BookstoreExample {
     public static void main(String[] args) {
         Bookstore bookstore = new Bookstore();
 
-        // Add 10 books to the inventory
-        bookstore.addBook(new Book("1234567890", "Book 1", 10.99));
-        bookstore.addBook(new Book("2345678901", "Book 2", 12.99));
-        bookstore.addBook(new Book("3456789012", "Book 3", 8.99));
-        bookstore.addBook(new Book("4567890123", "Book 4", 15.99));
-        bookstore.addBook(new Book("5678901234", "Book 5", 6.99));
-        bookstore.addBook(new Book("6789012345", "Book 6", 9.99));
-        bookstore.addBook(new Book("7890123456", "Book 7", 11.99));
-        bookstore.addBook(new Book("8901234567", "Book 8", 7.99));
-        bookstore.addBook(new Book("9012345678", "Book 9", 14.99));
-        bookstore.addBook(new Book("0123456789", "Book 10", 13.99));
+        // Add 10 books with their respective prices to the inventory
+        bookstore.addBook(new Book("978-0134685991", "Effective Java", "Joshua Bloch", 45.00), 10);
+        bookstore.addBook(new Book("978-0596009205", "Head First Java", "Kathy Sierra, Bert Bates", 30.00), 8);
+        bookstore.addBook(new Book("978-0134494166", "Clean Code", "Robert C. Martin", 50.00), 5);
+        bookstore.addBook(new Book("978-0321356680", "Java Concurrency in Practice", "Brian Goetz", 55.00), 7);
+        bookstore.addBook(new Book("978-1617294945", "Java: The Complete Reference", "Herbert Schildt", 60.00), 12);
+        bookstore.addBook(new Book("978-0132350884", "Design Patterns: Elements of Reusable Object-Oriented Software", "Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides", 40.00), 3);
+        bookstore.addBook(new Book("978-1491950357", "Learning Java", "Patrick Niemeyer, Daniel Leuck", 35.00), 9);
+        bookstore.addBook(new Book("978-0134685992", "Effective Java (2nd Edition)", "Joshua Bloch", 45.00), 4);
+        bookstore.addBook(new Book("978-1492037255", "Java Performance: The Definitive Guide", "Scott Oaks", 47.00), 6);
+        bookstore.addBook(new Book("978-0134685993", "Effective Java (3rd Edition)", "Joshua Bloch", 45.00), 2);
 
-        // Display the initial inventory
-        logger.info("Initial Inventory:");
+        // Display the initial inventory of the bookstore
         bookstore.displayInventory();
 
         // Remove some books from the bookstore
-        bookstore.removeBook("3456789012");
-        bookstore.removeBook("7890123456");
-        bookstore.removeBook("0123456789");
+        bookstore.removeBook(new Book("978-0134685992", "Effective Java (2nd Edition)", "Joshua Bloch", 45.00));
+        bookstore.removeBook(new Book("978-0134685993", "Effective Java (3rd Edition)", "Joshua Bloch", 45.00));
 
         // Display the updated inventory after removal
-        logger.info("Updated Inventory:");
+        bookstore.displayInventory();
+
+        // Sell some books
+        bookstore.sellBook(new Book("978-0134685991", "Effective Java", "Joshua Bloch", 45.00), 3);
+        bookstore.sellBook(new Book("978-0596009205", "Head First Java", "Kathy Sierra, Bert Bates", 30.00), 2);
+
+        // Display the updated inventory after sales
         bookstore.displayInventory();
     }
 }
